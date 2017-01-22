@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private TextView resultTEXT;
+    private ArrayList<String> result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity
         Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         i.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        i.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS,3000);
         i.putExtra(RecognizerIntent.EXTRA_PROMPT, "Say something");
 
         try{
@@ -79,7 +81,7 @@ public class MainActivity extends AppCompatActivity
         switch(requestCode){
             case 100:
                 if (resultCode == RESULT_OK && i != null){
-                    ArrayList<String> result = i.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    result = i.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     resultTEXT.setText(result.get(0));
                 }
                 break;
