@@ -2,16 +2,31 @@ import java.util.Scanner;
 
 public class Quiz {
 	
-	public static void main(String[] args){
+	
+	private int sentenceCount; //number of sentences in the paragraph
+	private int paragraphLength; //number of words in the paragraph
+	private String[] paragraph; //body of text placed String-by-String in an array
+	private Question[] game = new Question[sentenceCount];  //Array of Question objects
+	
+	public Quiz(){
+		sentenceCount = 0;
+		paragraphLength = 0;
+		paragraph = new String[paragraphLength];
+		game = new Question[sentenceCount];
+	}
+	
+	public Quiz(String[] paragraph){
+		
+	}
 		
 		Scanner keyboard = new Scanner(System.in);
 		
-		int paragraphLength = 14;
+		paragraphLength = 14;
+		paragraph = {"Our", "honourable", "friend.", "He", "was", "a", "roach.", "He", "was", "a", "roach.", "He", "was", "a", "roach."};
 		
-		String[] paragraph = {"Our", "honourable", "friend.", "He", "was", "a", "roach.", "He", "was", "a", "roach.", "He", "was", "a", "roach."};
 		//String[] paragraph = new String[paragraphLength];
 		
-		int sentenceCount = 0;
+		sentenceCount = 0;
 		
 		for (int i=0; i < paragraph.length; i++){
 			
@@ -21,12 +36,11 @@ public class Quiz {
 		}//end for
 		
 		int phraseLength = 0;
-		Question[] game = new Question[sentenceCount];
+		//Question[] game = new Question[sentenceCount];
 		
 		//initialize objects
 		int head = 0;
 		int counter = 0;
-		
 		
 		String[] passerArray = new String[phraseLength];
 		
@@ -36,34 +50,30 @@ public class Quiz {
 			//checks paragraph again
 			if(charCheck(paragraph[j])){
 				int tail = j;
-					
-					phraseLength = (tail - head);
-					//game[counter].setLength(phraseLength); //this is buggy is counter ok?
-					int passerCount = 0;
-					
-					for (int k = (head); k < tail; k++){
-					//	String[] passerArray = new String[phraseLength];
-						
-						passerArray = new String[phraseLength];
-						
-						passerArray[passerCount] = paragraph[k];
-						passerCount += 1;
-
-					}
-					game[counter] = new Question(passerArray.length, passerArray);
+				if (head == 0){
+					String[] sentence = firstSentenceBuilder(paragraph, head, tail);
+					game[counter] = new Question(sentence.length, sentence);
 					counter += 1;
+					
+				} else if (head != 0){
+					String[] sentence = laterSentenceBuilder(paragraph, head, tail);
+					game[counter] = new Question(sentence.length, sentence);
+					counter += 1;
+				}
+				head = tail;
 			}
-			
-			head = j;
 		}//end for
+		
 		boolean anotherQuestion = false;
+		int sentencesLeft = paragraphLength;
 		int questionCount = 0;
 		do{
 			String keyword = game[questionCount].getKeyword();
 			printArray(game[questionCount], keyword);
+			sentencesLeft -= 1;
 			System.out.println("Enter the missing word:");
 			String answer = keyboard.next();
-			if(answer.equals(keyword)){
+			if(answer.equalsIgnoreCase(keyword)){
 				System.out.println("Congratulations! That's the correct answer! Would you like to play again?");
 				String reply = keyboard.next();
 				if(reply.equalsIgnoreCase("yes")){
@@ -79,13 +89,13 @@ public class Quiz {
 					anotherQuestion = true;
 				} else {
 					anotherQuestion = false;
-				}
-					
+				}		
 			}
 			questionCount += 1;
 			
-		}while(anotherQuestion == true);
-	}
+		}while(anotherQuestion == true && sentencesLeft != 0);
+	
+	
 	//method that prints out a sentence array and blanks out the keyword
 	public static void printArray(Question a, String keyword){
 		
@@ -107,4 +117,5 @@ public class Quiz {
 		return finalWord;
 	}
 }
+
 

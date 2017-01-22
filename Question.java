@@ -2,10 +2,14 @@ import java.util.Arrays;
 
 public class Question {
 	
+	/* The Question class has attributes length (for length of the sentence), 
+	 * phrase (a String array which holds every word of the sentence), and 
+	 * keyword, which determines which word to remove from the sentence when quizzing.
+	 */
+	
 	private int length;
 	private String[] phrase;
 	private String keyword;
-	//private int keywordIndex;
 	
 	public Question(){
 		length = 0;
@@ -46,7 +50,7 @@ public class Question {
 			} else if (i > 0 && Arrays.asList(unusableWords).contains(sentence[i - 1])){
 				keyword = sentence[i];
 			}
-			if (keyword == null){
+			if (keyword == (null)){
 				keyword = sentence[(int) (Math.random()*(sentence.length))];
 			}
 		}
