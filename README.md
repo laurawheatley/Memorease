@@ -1,0 +1,1 @@
+Memorease is an adroid app by Derek Yu, Anthony Palmeri, and Laura Wheatley that allows the user to record and playback text and test their knowledge based on input in order to aid in memorization of text.
