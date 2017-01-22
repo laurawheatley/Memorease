@@ -3,7 +3,7 @@ import java.util.Arrays;
 public class Question {
 	
 	private int length;
-	private String[] phrase = new String[length];
+	private String[] phrase;
 	private String keyword;
 	//private int keywordIndex;
 	
@@ -28,10 +28,10 @@ public class Question {
 	}
 	public void setPhrase(String[] sentence){
 		setLength(sentence.length);
+		phrase = new String[length];
 		for (int i=0; i < sentence.length; i++){
 			phrase[i] = sentence[i];
 		}
-		this.phrase = phrase;
 	}
 	public String getKeyword(){
 		//setKeyword(phrase);
@@ -43,7 +43,7 @@ public class Question {
 			String [] unusableWords = {"an", "a", "the", "is", "so", "but", "if", "this", "can", "as", "did", "does"};
 			if (Arrays.asList(unusableWords).contains(sentence[i])){
 				break;
-			} else if (Arrays.asList(unusableWords).contains(sentence[i - 1])){
+			} else if (i > 0 && Arrays.asList(unusableWords).contains(sentence[i - 1])){
 				keyword = sentence[i];
 			}
 			if (keyword == null){
