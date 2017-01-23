@@ -22,6 +22,7 @@ public SentenceBuilder(){
 public SentenceBuilder(String[] paragraph){
 	this.paragraph = paragraph;
 	setSentence();
+	//TODO: head and tail finder
 }
 //constructor where we KNOW head and tail
 public SentenceBuilder(String[] paragraph, int head, int tail){
